@@ -262,3 +262,37 @@ footer {
 footer p {
     margin: 0;
 }
+
+/* マップ画像を画面幅に合わせる */
+.island-map {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.island-drawing {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* ヘッダーのメニューを横並びにする */
+header nav ul {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 0 5px;
+    margin: 0;
+    list-style: none;
+}
+
+/* メニュー名が途中で改行されるのを防ぐ */
+header nav a {
+    white-space: nowrap;
+    font-size: 10px;
+}
