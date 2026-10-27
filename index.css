@@ -1,0 +1,264 @@
+/* test2.css */
+
+/* Google Fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Yomogi&display=swap');
+
+
+/* =========================
+   サイト全体
+========================= */
+
+body {
+    font-family: 'Yomogi', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #b7dbff;
+    color: #333;
+}
+
+
+/* =========================
+   ヘッダー
+========================= */
+
+header {
+    background-color: #66cc00;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+
+/* =========================
+   ナビゲーション
+========================= */
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #ff9800;
+}
+
+
+/* =========================
+   メインコンテンツ
+========================= */
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* =========================
+   各セクション
+========================= */
+
+section {
+    margin-bottom: 40px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+section h2 {
+    font-size: 1.6em;
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 2px solid #7f7fff;
+    display: block;
+    padding-bottom: 5px;
+}
+
+
+/* =========================
+   地図の番号ボタン
+========================= */
+
+/* 2列で並べる */
+.spot-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 20px;
+    width: 100%;
+    margin: 20px 0;
+    align-items: center;
+}
+
+/* 番号ボタン共通デザイン */
+.spot-buttons button {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    color: #55483f;
+    font-family: 'Yomogi', cursive;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    justify-self: center;
+    box-shadow: 2px 3px 0 #d9c7bc;
+    transition: transform 0.2s, box-shadow 0.2s;
+    writing-mode: horizontal-tb;
+}
+
+/* 全体図：オレンジ */
+.zentaizu-buttons button {
+    background-color: #ffbd73;
+}
+
+/* 中心図：青 */
+.chushin-buttons button {
+    background-color: #a9d8f5;
+}
+
+/* マウスを乗せたとき */
+.spot-buttons button:hover {
+    transform: translateY(-3px);
+    box-shadow: 3px 5px 0 #d9c7bc;
+}
+
+/* ボタンを押したとき */
+.spot-buttons button:active {
+    transform: translateY(1px);
+    box-shadow: 1px 2px 0 #d9c7bc;
+}
+
+
+/* スポット一覧を横書きにする */
+#midokoro,
+#midokoro * {
+    writing-mode: horizontal-tb !important;
+    text-orientation: mixed !important;
+}
+
+
+/* 見どころスポット：横書きに統一 */
+#midokoro,
+#midokoro h2,
+#midokoro h3,
+#midokoro p,
+#midokoro .spot-buttons,
+#midokoro .spot-buttons button,
+#midokoro .spot-detail {
+    writing-mode: horizontal-tb !important;
+    text-orientation: mixed !important;
+}
+
+/* スポット一覧を2列にする */
+#midokoro .spot-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 番号とスポット名を横並びに表示 */
+#midokoro .spot-buttons button {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: left;
+    line-height: 1.6;
+    border-radius: 12px;
+    font-family: 'Yomogi', sans-serif;
+}
+
+/* 全体マップ：オレンジ */
+#midokoro .zentaizu-buttons button {
+    background-color: #ffbd73 !important;
+}
+
+/* 中心マップ：水色 */
+#midokoro .chushin-buttons button {
+    background-color: #a9d8f5 !important;
+}
+
+
+/* =========================
+   おすすめコース診断
+========================= */
+
+/* 診断の見出し */
+#shindan h2 {
+    display: block;
+    width: fit-content;
+}
+
+/* 行き・帰りのラベル */
+#shindan label {
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 6px;
+}
+
+/* 選択ボックス */
+#shindan select {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    font-family: inherit;
+    padding: 8px;
+}
+
+/* 診断ボタン */
+#shindan button {
+    display: block;
+    margin-top: 20px;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+
+/* =========================
+   フッター
+========================= */
+
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+footer p {
+    margin: 0;
+}

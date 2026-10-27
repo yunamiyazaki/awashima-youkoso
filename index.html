@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>粟島へようこそ</title>
+    <link rel="stylesheet" href="index.css">
+
+    <script>
+        function calcTime() {
+        
+            const go = document.getElementById("go").value;
+            const back = document.getElementById("back").value;
+        
+            if (!go || !back) {
+                document.getElementById("result").innerHTML =
+                    "行きと帰りの便を選択してください";
+                return;
+            }
+        
+            const goTime = new Date(`2025-01-01 ${go}`);
+            const backTime = new Date(`2025-01-01 ${back}`);
+        
+            const diff = backTime - goTime;
+        
+            const minutes = diff / 1000 / 60;
+            const hours = Math.floor(minutes / 60);
+            const mins = minutes % 60;
+
+            let course = "";
+
+            if (minutes <= 10) {
+                course = "滞在時間が短すぎます。次の便をご検討ください。";
+            }
+            else if (minutes < 180) {
+                course = "お手軽コース";
+            }
+            else if (minutes < 360) {
+                course = "定番コース";
+            }
+            else {
+                course = "満喫コース";
+            }
+
+            document.getElementById("result").innerHTML =
+                `滞在時間：${hours}時間${mins}分<br><br>${course}`;
+
+        }
+        
+        function updateBackOptions() {
+        
+            const goTime = document.getElementById("go").value;
+            const options = document.getElementById("back").options;
+        
+            for(let i = 0; i < options.length; i++) {
+        
+                if(options[i].value === "") {
+                    continue;
+                }
+        
+                options[i].disabled =
+                    options[i].value <= goTime;
+            }
+        
+            document.getElementById("back").value = "";
+        }
+        </script>
+
+</head>
+
+
+
+<body>
+
+<header>
+    <h1>粟島へようこそ</h1>
+    <nav>
+        <ul>
+            <li><a href="#about-awashima">粟島について</a></li>
+            <li><a href="#midokoro">見どころスポット</a></li>
+            <li><a href="#shindan">おすすめコース診断</a></li>
+            <li><a href="#kamisibai">紙芝居</a></li>                 
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+<section id="about-awashima">
+    <h2>粟島について</h2>
+    <p>粟島は、人口約150人の三豊市詫間町にある小さな島です。<br>
+       三つの島が陸続きになったので、スクリューのような形が特徴的。<br>
+       歴史・自然・アートがつまった魅力いっぱいの粟島をお楽しみください<br>
+    </p>
+</section>
+
+
+<section id="midokoro" class="map-section">
+    <h2>見どころスポット</h2>
+    <p class="map-intro">気になる番号をタップ！</p>
+
+    <!-- 全体図 -->
+    <h3>粟島全体マップ</h3>
+    <div class="island-map">
+        <img src="zentaizu.png" alt="粟島全体図" class="island-drawing">
+    </div>
+
+    <div class="spot-buttons zentaizu-buttons">
+        <button onclick="showSpot('z1')">① 西浜・だるま窯</button>
+        <button onclick="showSpot('z2')">② 城山</button>
+        <button onclick="showSpot('z3')">③ タブの木・梵音寺</button>
+        <button onclick="showSpot('z4')">④ galleryあまた</button>
+        <button onclick="showSpot('z5')">⑤ あわろは食堂</button>
+        <button onclick="showSpot('z6')">⑥ 粟島神社</button>
+        <button onclick="showSpot('z7')">⑦ 天空のブランコ・巨大迷路</button>
+        <button onclick="showSpot('z8')">⑧ 馬城八幡宮</button>
+        <button onclick="showSpot('z9')">⑨ ブラジャー観音</button>
+        <button onclick="showSpot('z10')">⑩ ぶいぶいがーでん</button>
+    </div>
+
+    <div id="zentaizu-detail" class="spot-detail">
+        <p>📍 全体マップの番号を選んでね！</p>
+    </div>
+
+    <!-- 中心図 -->
+    <h3>粟島中心マップ</h3>
+    <div class="island-map">
+        <img src="chushin.png" alt="粟島中心図" class="island-drawing">
+    </div>
+
+    <div class="spot-buttons chushin-buttons">
+        <button onclick="showSpot('c1')">① 芸術家村</button>
+        <button onclick="showSpot('c2')">② 漂流郵便局</button>
+        <button onclick="showSpot('c3')">③ フミヤベンチ</button>
+        <button onclick="showSpot('c4')">④ 粟島伊勢神宮</button>
+        <button onclick="showSpot('c5')">⑤ 粟島海洋記念館</button>
+        <button onclick="showSpot('c6')">⑥ ルポール粟島</button>
+        <button onclick="showSpot('c7')">⑦ 大口しま子のレンタサイクル</button>
+        <button onclick="showSpot('c8')">⑧ 島コン武内商店</button>
+    </div>
+
+    <div id="chushin-detail" class="spot-detail">
+        <p>📍 中心マップの番号を選んでね！</p>
+    </div>
+</section>
+
+   
+
+
+
+<script>
+    const spots = {
+        z1: {
+            group: "zentaizu",
+            name: "西浜・だるま窯",
+            icon: "🏖️",
+            description: "海辺の景色や、だるま窯にまつわる粟島の魅力を楽しもう！"
+        },
+        z2: {
+            group: "zentaizu",
+            name: "城山",
+            icon: "⛰️",
+            description: "自然を感じながら、島の景色を楽しめるスポット。"
+        },
+        z3: {
+            group: "zentaizu",
+            name: "タブの木・梵音寺",
+            icon: "🌳",
+            description: "島の自然や歴史にふれてみよう。"
+        },
+        z4: {
+            group: "zentaizu",
+            name: "galleryあまた",
+            icon: "🎨",
+            description: "粟島でアートにふれてみよう。"
+        },
+        z5: {
+            group: "zentaizu",
+            name: "あわろは食堂",
+            icon: "🍚",
+            description: "島でのお食事や休憩にチェックしたいスポット。"
+        },
+        z6: {
+            group: "zentaizu",
+            name: "粟島神社",
+            icon: "⛩️",
+            description: "島の神社を訪れてみよう。"
+        },
+        z7: {
+            group: "zentaizu",
+            name: "天空のブランコ・巨大迷路",
+            icon: "🎠",
+            description: "ブランコや迷路など、遊びを楽しめるスポット。"
+        },
+        z8: {
+            group: "zentaizu",
+            name: "馬城八幡宮",
+            icon: "⛩️",
+            description: "島の歴史を感じられる神社。"
+        },
+        z9: {
+            group: "zentaizu",
+            name: "ブラジャー観音",
+            icon: "🪷",
+            description: "粟島ならではのユニークなスポット。"
+        },
+        z10: {
+            group: "zentaizu",
+            name: "ぶいぶいがーでん",
+            icon: "🌱",
+            description: "島の風景や取り組みにふれてみよう。"
+        },
+        c1: {
+            group: "chushin",
+            name: "芸術家村",
+            icon: "🎨",
+            description: "アートと島の暮らしにふれられるスポット。"
+        },
+        c2: {
+            group: "chushin",
+            name: "漂流郵便局",
+            icon: "💌",
+            description: "届け先のわからない手紙を預かるアートプロジェクト。開局日を確認して訪れよう。"
+        },
+        c3: {
+            group: "chushin",
+            name: "フミヤベンチ",
+            icon: "🪑",
+            description: "島のおさんぽ途中に立ち寄りたいスポット。"
+        },
+        c4: {
+            group: "chushin",
+            name: "粟島伊勢神宮",
+            icon: "⛩️",
+            description: "島の歴史や文化にふれてみよう。"
+        },
+        c5: {
+            group: "chushin",
+            name: "粟島海洋記念館",
+            icon: "🏛️",
+            description: "粟島の海事教育の歴史に関わる建物。訪問前に公開状況を確認しよう。"
+        },
+        c6: {
+            group: "chushin",
+            name: "ルポール粟島",
+            icon: "🏡",
+            description: "島での滞在や休憩について確認したいスポット。"
+        },
+        c7: {
+            group: "chushin",
+            name: "大口しま子のレンタサイクル",
+            icon: "🚲",
+            description: "自転車で島をめぐりたいときにチェックしよう。"
+        },
+        c8: {
+            group: "chushin",
+            name: "島コン武内商店",
+            icon: "🏠",
+            description: "島のお店や地域の魅力にふれてみよう。"
+        }
+    };
+    
+    function showSpot(spot) {
+        const selected = spots[spot];
+        if (!selected) return;
+    
+        const detailId = selected.group === "zentaizu"
+            ? "zentaizu-detail"
+            : "chushin-detail";
+    
+        document.getElementById(detailId).innerHTML = `
+            <h3>${selected.icon} ${selected.name}</h3>
+            <p>${selected.description}</p>
+            <button type="button" onclick="closeSpot('${selected.group}')">
+                閉じる
+            </button>
+        `;
+    }
+    
+    function closeSpot(group) {
+        const detailId = group === "zentaizu"
+            ? "zentaizu-detail"
+            : "chushin-detail";
+    
+        const message = group === "zentaizu"
+            ? "📍 全体マップの番号を選んでね！"
+            : "📍 中心マップの番号を選んでね！";
+    
+        document.getElementById(detailId).innerHTML =
+            `<p>${message}</p>`;
+    }
+    </script>
+    
+
+<section id="shindan">
+    <h2>おすすめコース診断</h2>
+
+            <label>行き</label>
+            <select id="go" onchange="updateBackOptions()">
+                <option value="">選択してください</option>
+                <option value="06:35">① 須田6:20発 → 粟島6:35着</option>
+                <option value="07:40">② 須田7:25発 → 粟島7:40着</option>
+                <option value="09:25">③ 須田9:10発 → 粟島9:25着</option>
+                <option value="11:05">④ 須田10:50発 → 粟島11:05着</option>
+                <option value="12:55">⑤ 須田12:40発 → 粟島12:55着</option>
+                <option value="15:25">⑥ 須田15:10発 → 粟島15:25着</option>
+                <option value="18:15">⑦ 須田18:00発 → 粟島18:15着</option>
+                <option value="19:20">⑧ 須田19:05発 → 粟島19:20着</option>
+            </select>
+        
+            <br><br>
+        
+            <label>帰り</label>
+            <select id="back">
+                <option value="">選択してください</option>
+                <option value="06:45">① 粟島6:45発 → 須田7:00着</option>
+                <option value="07:50">② 粟島7:50発 → 須田8:05着</option>
+                <option value="09:35">③ 粟島9:35発 → 須田9:50着</option>
+                <option value="11:15">④ 粟島11:15発 → 須田11:30着</option>
+                <option value="14:30">⑤ 粟島14:30発 → 須田14:45着</option>
+                <option value="17:15">⑥ 粟島17:15発 → 須田17:30着</option>
+                <option value="18:25">⑦ 粟島18:25発 → 須田18:40着</option>
+                <option value="19:30">⑧ 粟島19:30発 → 須田19:45着</option>
+            </select>
+        
+            <br><br>
+                    
+            <button onclick="calcTime()">滞在時間を計算</button>
+        
+            <h3 id="result"></h3>
+</section>
+
+<section id="kamisibai">
+    <h2>紙芝居</h2>
+    <p>紙芝居を閲覧できるコーナー</p>
+</section>
+
+
+</main>
+
+</body>
+</html>
